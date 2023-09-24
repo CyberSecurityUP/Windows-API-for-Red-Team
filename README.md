@@ -15,18 +15,18 @@ C++
 #include <iostream>
 
 int main() {
-    // Crie um snapshot dos processos em execução
+    //Create a snapshot of running processes
     HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hSnapshot == INVALID_HANDLE_VALUE) {
         std::cerr << "Erro ao criar o snapshot: " << GetLastError() << std::endl;
         return 1;
     }
 
-    // Estrutura para armazenar informações sobre um processo
+    // Structure for storing information about a process
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof(PROCESSENTRY32);
 
-    // Inicialize o loop para enumerar os processos
+    // Initialize the loop to enumerate the processes
     if (Process32First(hSnapshot, &pe32)) {
         do {
             std::cout << "Processo ID: " << pe32.th32ProcessID << std::endl;
@@ -36,7 +36,7 @@ int main() {
         std::cerr << "Erro ao enumerar processos: " << GetLastError() << std::endl;
     }
 
-    // Feche o snapshot
+    // Close the snapshot
     CloseHandle(hSnapshot);
 
     return 0;
